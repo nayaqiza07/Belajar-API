@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <title>Latihan Ajax</title>
+  </head>
+  <body>
+
+    <div class="container p-3 my-3 text-center">
+      <h1>Cuaca di <span id="kota"></span></h1>
+      <p id="temp" class="display-4"></p>
+      <img height="200">
+      <h3></h3>
+      <p>
+        Min: <span id="min"></span> Max: <span id="max"></span>
+      </p>
+    </div>
+
+    <script>
+      api = 'http://api.openweathermap.org/data/2.5/';
+      key = 'f5b0ab0f5b394bece5fe00ab2d4f398f';
+      city = 'Jepara';
+
+      $(document).ready(function () {
+        $.ajax({
+          url: api + 'weather?q=' + city + '&appid=' + key + '&units=metric',
+          success: function (res) {
+            $('#kota').html(res.name);
+            $('#temp').html(res.main.temp+'&deg;C');
+            $('#min').html(res.main.temp_min+'&deg;C');
+            $('#max').html(res.main.temp_max+'&deg;C');
+
+            var icon = res.weather[0].icon;
+            $('img').attr('src','http://openweathermap.org/img/wn/'+icon+'@2x.png');
+            $('h3').text(res.weather[0].main+' - '+res.weather[0].description);
+          }
+        });
+      });
+    </script>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
